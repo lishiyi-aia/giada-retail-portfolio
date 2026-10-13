@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI教育客户沟通与体验活动：以客户需求调研为起点，通过产品讲解、使用内容和高校体验活动，跟进反馈并推动改进。">
+  <title>AI教育客户沟通与体验活动 | Shiyi Li</title>
+  <style>
+    :root {
+      --ink: #202e2a; --forest: #163c32; --green: #08765d; --blue: #245bd0;
+      --pink: #b23768; --gold: #996014; --yellow: #ffe083; --muted: #5c6c66;
+      --line: #d8e1dc; --soft: #f3f6f4; --paper: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.75 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 0; }
+    h1, h2, h3, h4, p, figure { margin: 0; }
+    h1, h2, h3, h4 { line-height: 1.4; letter-spacing: 0; text-wrap: balance; }
+    p { overflow-wrap: anywhere; }
+    a { color: inherit; text-underline-offset: 4px; }
+    img { display: block; max-width: 100%; height: auto; }
+    button { font: inherit; cursor: pointer; touch-action: manipulation; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid var(--pink); outline-offset: 5px; }
+    .mono { font-family: "SFMono-Regular", Consolas, monospace; font-variant-numeric: tabular-nums; }
+    .wrap { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+    .skip-link { position: fixed; z-index: 100; top: 8px; left: 12px; transform: translateY(-150%); padding: 8px 12px; background: #fff; }
+    .skip-link:focus { transform: none; }
+    .topbar { position: sticky; top: 0; z-index: 30; min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 max(32px, calc((100% - 1180px) / 2)); background: #163c32fa; color: #fff; border-bottom: 1px solid #ffffff26; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .brand-mark { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #ffffff80; border-radius: 50%; font-size: 11px; }
+    .topnav { display: flex; gap: 22px; overflow: auto; scrollbar-width: none; }
+    .topnav::-webkit-scrollbar { display: none; }
+    .topnav a { display: inline-flex; align-items: center; flex-shrink: 0; min-height: 44px; color: #d1e2da; font-size: 12px; text-decoration: none; border-bottom: 2px solid transparent; }
+    .topnav a:hover, .topnav a[aria-current="location"] { color: #fff; border-bottom-color: var(--yellow); }
+    .topnav .privacy-link { color: var(--yellow); font-weight: 750; }
+    .hero { position: relative; isolation: isolate; color: #fff; background: var(--forest); }
+    .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #102b24fa 0%, #102b24ec 43%, #102b2460 75%, #102b2438 100%), url("../../works/covers/ai-partnership.jpg") center / cover no-repeat; }
+    .hero-inner { padding-block: 64px 54px; }
+    .eyebrow { color: #ffdf8a; font-size: 11px; font-weight: 750; margin-bottom: 22px; }
+    h1 { max-width: 790px; font-size: 56px; font-weight: 850; line-height: 1.22; }
+    .hero-copy { max-width: 630px; margin-top: 25px; color: #e2eee7; font-size: 17px; line-height: 1.9; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 30px; color: #e0e9e3; font-size: 12px; }
+    .hero-meta span { padding-left: 10px; border-left: 2px solid #ffdf8a; }
+    .hero-foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 38px; padding-top: 20px; border-top: 1px solid #ffffff40; }
+    .hero-foot p { color: #d1e2da; font-size: 12px; }
+    .hero-foot a { display: inline-flex; gap: 18px; align-items: center; min-height: 44px; color: #ffdf8a; font-size: 13px; font-weight: 700; text-decoration: none; }
+    .confidential { background: var(--yellow); color: #362807; border-bottom: 1px solid #d9b759; scroll-margin-top: 0; }
+    .confidential-inner { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding-block: 25px; align-items: center; }
+    .confidential-label { display: block; font-size: 19px; line-height: 1.4; }
+    .confidential-label small { display: block; margin-top: 7px; font-size: 10px; font-weight: 650; }
+    .confidential-copy strong { display: block; font-size: 16px; }
+    .confidential-copy p { margin-top: 5px; font-size: 12px; }
+    .band { border-bottom: 1px solid var(--line); }
+    .band.soft { background: var(--soft); }
+    .section { padding-block: 76px; scroll-margin-top: 16px; }
+    .section-head { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: start; gap: 70px; margin-bottom: 36px; }
+    .index { margin-bottom: 12px; color: var(--green); font-size: 11px; font-weight: 750; }
+    h2 { font-size: 36px; font-weight: 800; }
+    h3 { font-size: 21px; }
+    .section-intro { padding-top: 3px; font-size: 15px; color: var(--muted); line-height: 1.95; }
+    .section-intro p + p { margin-top: 12px; }
+    .work-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
+    .work-item { --accent: var(--green); padding-top: 24px; border-top: 3px solid var(--accent); }
+    .work-item:nth-child(2) { --accent: var(--blue); }
+    .work-item:nth-child(3) { --accent: var(--pink); }
+    .work-item:nth-child(4) { --accent: var(--gold); }
+    .work-number { display: block; color: var(--accent); font: 42px/1.1 "SFMono-Regular", Consolas, monospace; margin-bottom: 19px; }
+    .work-item p { margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; padding: 0; margin: 0; list-style: none; }
+    .stage { --accent: var(--green); position: relative; min-width: 0; padding-top: 29px; }
+    .stage:nth-child(2) { --accent: var(--blue); }
+    .stage:nth-child(3) { --accent: var(--pink); }
+    .stage:nth-child(4) { --accent: var(--gold); }
+    .stage::before { content: ""; position: absolute; top: 0; left: 0; right: -22px; height: 3px; background: var(--accent); }
+    .stage:last-child::before { right: 0; }
+    .stage:not(:last-child)::after { content: "→"; position: absolute; top: -18px; right: -18px; color: var(--accent); background: var(--soft); font-size: 23px; padding-inline: 4px; }
+    .stage-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; color: var(--accent); }
+    .stage-top strong { font: 48px/1 "SFMono-Regular", Consolas, monospace; }
+    .stage-top span { font-size: 10px; font-weight: 750; }
+    .stage h3 { font-size: 20px; margin-top: 22px; min-height: 57px; }
+    .stage p { min-height: 80px; margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .stage-output { min-height: 88px; padding-block: 17px; margin-top: 16px; border-top: 1px solid var(--line); }
+    .stage-output small { display: block; font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+    .stage-output strong { display: block; font-size: 12px; font-weight: 650; }
+    .stage a { display: inline-flex; min-height: 44px; align-items: center; gap: 14px; font-size: 12px; color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+    .stage a:hover { background: #e5ece8; }
+    .collaboration-map { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1.25fr); gap: 62px; align-items: center; padding-block: 24px; }
+    .partner { position: relative; border-block: 2px solid var(--blue); padding-block: 27px; }
+    .map-label { display: block; color: var(--blue); font-size: 10px; font-weight: 750; margin-bottom: 14px; }
+    .partner h3 { font-size: 24px; }
+    .partner p { color: var(--muted); font-size: 13px; margin-top: 12px; }
+    .partner::after { content: "⇄"; position: absolute; right: -46px; top: 50%; transform: translateY(-50%); color: var(--green); font-size: 25px; }
+    .my-role { position: relative; padding: 30px 26px; background: var(--forest); color: #fff; border-radius: 4px; }
+    .my-role .map-label { color: #a7e6c8; }
+    .my-role h3 { font-size: 25px; line-height: 1.5; }
+    .my-role ul { list-style: none; margin: 22px 0 0; padding: 0; color: #d8e9df; font-size: 13px; }
+    .my-role li { padding-block: 8px; border-top: 1px solid #ffffff2b; }
+    .my-role::after { content: ""; position: absolute; width: 31px; height: 1px; right: -31px; top: 50%; background: #95aea0; }
+    .teams { display: grid; gap: 12px; position: relative; }
+    .teams::before { content: ""; position: absolute; left: -32px; top: 47px; bottom: 47px; border-left: 1px solid #95aea0; }
+    .team { --accent: var(--blue); position: relative; display: grid; grid-template-columns: 35px 1fr; gap: 12px; min-height: 94px; align-items: center; padding: 15px 18px; background: var(--soft); border-left: 3px solid var(--accent); }
+    .team:nth-child(2) { --accent: var(--green); }
+    .team:nth-child(3) { --accent: var(--pink); }
+    .team:nth-child(4) { --accent: var(--gold); }
+    .team::before { content: ""; position: absolute; left: -32px; width: 29px; top: 50%; height: 1px; background: #95aea0; }
+    .team > span { color: var(--accent); font-size: 12px; }
+    .team h4 { font-size: 15px; }
+    .team p { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .map-note { margin-top: 22px; padding-top: 19px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .followup-table { border-top: 2px solid var(--ink); }
+    .followup-row { display: grid; grid-template-columns: .65fr 1.2fr 1.15fr; gap: 36px; align-items: baseline; padding: 23px 0; border-bottom: 1px solid var(--line); }
+    .followup-row.header { padding-block: 12px; font-size: 11px; color: var(--muted); }
+    .followup-row h3 { font-size: 16px; }
+    .followup-row h3 span { font-size: 11px; color: var(--green); margin-right: 10px; }
+    .followup-row p { font-size: 13px; color: var(--muted); }
+    .followup-row p:last-child { color: var(--ink); }
+    .followup-label { display: none; }
+    .records { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-top: 32px; }
+    .record { padding-top: 16px; border-top: 3px solid var(--green); }
+    .record:nth-child(2) { border-top-color: var(--blue); }
+    .record:nth-child(3) { border-top-color: var(--pink); }
+    .record h4 { font-size: 15px; }
+    .record p { margin-top: 7px; font-size: 12px; color: var(--muted); }
+    .evidence-notice { display: flex; align-items: baseline; gap: 24px; padding: 17px 22px; margin-bottom: 32px; color: #362807; background: var(--yellow); border-left: 4px solid #ae790b; }
+    .evidence-notice strong { flex-shrink: 0; font-size: 14px; }
+    .evidence-notice p { font-size: 12px; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 38px 26px; }
+    .evidence { grid-column: span 2; min-width: 0; scroll-margin-top: 108px; }
+    .evidence:nth-child(-n+2) { grid-column: span 3; }
+    .evidence:target { outline: 3px solid var(--green); outline-offset: 10px; }
+    .evidence-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; }
+    .evidence-heading span { font-size: 12px; color: var(--green); font-weight: 750; }
+    .evidence-heading time { font-size: 11px; color: var(--muted); }
+    .evidence-frame { display: block; position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #eef0ef; border: 1px solid var(--line); cursor: zoom-in; }
+    .evidence:nth-child(-n+2) .evidence-frame { aspect-ratio: 1.9 / 1; }
+    .evidence-frame img { width: 100%; height: 100%; object-fit: contain; }
+    .evidence-frame:hover { outline: 3px solid var(--green); outline-offset: -3px; }
+    .evidence figcaption { margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--line); }
+    .evidence figcaption strong { display: block; font-size: 16px; }
+    .evidence figcaption p { font-size: 12px; color: var(--muted); margin-top: 7px; }
+    .outcomes-band { color: #fff; background: var(--forest); }
+    .outcomes-band .index { color: #a7e6c8; }
+    .outcomes-band .section-intro { color: #d1e2d9; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid #ffffff42; }
+    .outcome { padding: 30px 28px; }
+    .outcome:first-child { padding-left: 0; }
+    .outcome + .outcome { border-left: 1px solid #ffffff42; }
+    .outcome span { font-size: 10px; color: #ffdf8a; }
+    .outcome h3 { font-size: 23px; margin-top: 26px; }
+    .outcome p { font-size: 13px; margin-top: 12px; color: #d1e2d9; }
+    .signing-evidence { width: min(820px, 100%); margin: 32px auto 0; }
+    .signing-evidence .evidence-frame { aspect-ratio: 1188 / 573; border-color: #ffffff42; }
+    .signing-evidence figcaption { padding-top: 14px; }
+    .signing-evidence figcaption strong { font-size: 16px; }
+    .signing-evidence figcaption p { margin-top: 4px; color: #d1e2d9; font-size: 13px; }
+    .contribution { display: flex; gap: 26px; margin-top: 30px; align-items: baseline; }
+    .contribution strong { flex-shrink: 0; color: #ffdf8a; font-size: 13px; }
+    .contribution p { color: #d1e2d9; font-size: 13px; }
+    .footer { padding-block: 26px; color: var(--muted); font-size: 11px; }
+    .footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer a { display: inline-flex; align-items: center; min-height: 44px; color: var(--green); font-weight: 700; }
+    .lightbox { width: min(1320px, calc(100% - 40px)); max-width: none; height: min(920px, calc(100dvh - 40px)); max-height: none; margin: auto; padding: 0; border: 1px solid #ffffff4a; border-radius: 6px; background: #172a23; color: #fff; }
+    .lightbox::backdrop { background: #081510e8; }
+    .lightbox[open] { display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; }
+    .lightbox-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 18px; }
+    .lightbox-head h2 { font-size: 16px; }
+    .icon-button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 0; border: 1px solid #ffffff55; border-radius: 4px; background: transparent; color: #fff; font-size: 25px; }
+    .icon-button:hover:not(:disabled) { background: #ffffff20; }
+    .icon-button:disabled { opacity: .3; cursor: default; }
+    .lightbox-disclosure { padding: 8px 18px; color: #362807; background: var(--yellow); font-size: 12px; font-weight: 650; }
+    .lightbox-visual { min-height: 0; display: grid; place-items: center; padding: 14px; }
+    .lightbox-visual img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+    .lightbox-footer { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 18px; align-items: center; padding: 12px 18px; border-top: 1px solid #ffffff30; }
+    .lightbox-caption { min-width: 0; text-align: center; }
+    .lightbox-caption p { color: #d1e2d9; font-size: 12px; }
+    .lightbox-caption a { display: inline-flex; align-items: center; min-height: 32px; font-size: 11px; color: #ffdf8a; }
+    @media (max-width: 1000px) {
+      h1 { font-size: 48px; max-width: 720px; } h2 { font-size: 32px; }
+      .topnav { gap: 16px; } .brand { font-size: 12px; }
+      .section-head { gap: 36px; }
+      .confidential-inner { grid-template-columns: 190px 1fr; gap: 26px; }
+      .work-grid { gap: 22px; } .work-item h3 { font-size: 19px; }
+      .timeline { gap: 18px; } .stage::before { right: -18px; }
+      .stage h3 { font-size: 18px; min-height: 51px; } .stage p { min-height: 104px; }
+      .collaboration-map { gap: 42px; } .partner::after { right: -34px; }
+      .my-role { padding: 24px 20px; } .my-role h3 { font-size: 22px; }
+      .my-role::after { right: -21px; width: 21px; } .teams::before { left: -22px; }
+      .team { padding-inline: 14px; grid-template-columns: 24px 1fr; gap: 8px; }
+      .team::before { width: 19px; left: -22px; }
+      .evidence-grid { gap: 30px 22px; } .evidence { grid-column: span 3; }
+      .outcome h3 { font-size: 21px; } .outcome { padding-inline: 20px; }
+    }
+    @media (max-width: 760px) {
+      html { scroll-padding-top: 104px; }
+      .wrap { width: calc(100% - 36px); }
+      .topbar { flex-direction: column; align-items: stretch; gap: 0; padding: 12px 18px 0; }
+      .brand { font-size: 12px; } .brand-mark { width: 24px; height: 24px; }
+      .topnav { width: 100%; gap: 21px; } .topnav a { font-size: 11px; }
+      .hero-inner { padding-block: 38px 28px; }
+      .hero::before { background-image: linear-gradient(90deg, #102b24ef 0%, #102b24e0 50%, #102b2490 100%), url("../../works/covers/ai-partnership.jpg"); background-position: center, 62% center; }
+      h1 { font-size: 34px; line-height: 1.3; }
+      .eyebrow { font-size: 10px; margin-bottom: 16px; }
+      .hero-copy { font-size: 14px; margin-top: 20px; }
+      .hero-meta { margin-top: 20px; gap: 8px 18px; font-size: 10px; }
+      .hero-foot { margin-top: 25px; padding-top: 12px; gap: 16px; }
+      .hero-foot p { max-width: 190px; font-size: 10px; } .hero-foot a { font-size: 11px; gap: 8px; flex-shrink: 0; }
+      .confidential-inner { grid-template-columns: 1fr; padding-block: 21px; gap: 12px; }
+      .confidential-label { font-size: 18px; }
+      .confidential-label small { display: none; }
+      .confidential-copy strong { font-size: 14px; } .confidential-copy p { font-size: 11px; }
+      .section { padding-block: 50px; }
+      .section-head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 28px; }
+      .section-intro { font-size: 14px; } h2 { font-size: 29px; }
+      .index { font-size: 10px; margin-bottom: 10px; }
+      .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; }
+      .work-item { padding-top: 17px; } .work-number { font-size: 33px; margin-bottom: 12px; }
+      .work-item h3 { font-size: 19px; } .work-item p { font-size: 12px; margin-top: 8px; }
+      .timeline { grid-template-columns: 1fr; gap: 0; }
+      .stage { padding: 0 0 30px 63px; margin-left: 9px; border-left: 2px solid var(--accent); }
+      .stage:last-child { padding-bottom: 0; }
+      .stage::before { display: none; }
+      .stage:not(:last-child)::after { content: "↓"; left: -11px; right: auto; top: auto; bottom: 5px; padding: 0; font-size: 22px; }
+      .stage-top strong { position: absolute; left: 15px; top: 3px; font-size: 25px; }
+      .stage-top span { font-size: 10px; }
+      .stage h3 { margin-top: 7px; font-size: 20px; min-height: 0; }
+      .stage p { min-height: 0; margin-top: 10px; font-size: 13px; }
+      .stage-output { min-height: 0; padding-block: 12px 0; margin-top: 12px; }
+      .stage a { margin-top: 8px; font-size: 11px; }
+      .collaboration-map { grid-template-columns: 1fr; gap: 38px; padding: 0; }
+      .partner { padding-block: 19px; } .partner h3 { font-size: 23px; }
+      .map-label { margin-bottom: 10px; }
+      .partner::after { content: "↕"; top: auto; bottom: -36px; left: 28px; right: auto; transform: none; }
+      .my-role { padding: 24px; } .my-role h3 { font-size: 24px; }
+      .my-role h3 br { display: none; }
+      .my-role ul { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 15px; }
+      .my-role li { font-size: 12px; }
+      .my-role::after { top: 100%; right: auto; left: 40px; width: 1px; height: 38px; }
+      .teams { margin-left: 62px; }
+      .teams::before { top: 0; left: -22px; bottom: 47px; }
+      .team { grid-template-columns: 25px 1fr; min-height: 94px; padding: 15px 13px; }
+      .team h4 { font-size: 14px; } .team p { font-size: 11px; }
+      .map-note { margin-top: 25px; font-size: 11px; }
+      .followup-row { grid-template-columns: 1fr; gap: 10px; padding-block: 22px; }
+      .followup-row.header { display: none; }
+      .followup-row p { display: grid; grid-template-columns: 68px 1fr; gap: 15px; font-size: 12px; }
+      .followup-label { display: inline; color: var(--muted); font-size: 11px; }
+      .records { grid-template-columns: 1fr; gap: 20px; }
+      .record { display: grid; grid-template-columns: 100px 1fr; gap: 18px; }
+      .record h4 { font-size: 14px; } .record p { margin: 0; }
+      .evidence-notice { display: block; padding: 15px 17px; margin-bottom: 27px; }
+      .evidence-notice p { margin-top: 6px; font-size: 11px; }
+      .evidence-grid { grid-template-columns: 1fr; gap: 30px; }
+      .evidence, .evidence:nth-child(-n+2) { grid-column: auto; }
+      .evidence-heading { padding-bottom: 9px; }
+      .evidence figcaption { margin-top: 12px; padding-top: 12px; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome, .outcome:first-child { padding: 23px 0; }
+      .outcome + .outcome { border-left: 0; border-top: 1px solid #ffffff42; }
+      .outcome h3 { margin-top: 10px; font-size: 23px; } .outcome p { margin-top: 8px; }
+      .contribution { display: block; margin-top: 25px; } .contribution p { margin-top: 10px; font-size: 12px; }
+      .footer .wrap { flex-direction: column; align-items: flex-start; gap: 5px; }
+      .lightbox { width: calc(100% - 16px); height: calc(100dvh - 24px); }
+      .lightbox-head { padding: 10px 12px; gap: 12px; } .lightbox-head h2 { font-size: 14px; }
+      .lightbox-disclosure { padding: 8px 12px; font-size: 11px; }
+      .lightbox-visual { padding: 8px; }
+      .lightbox-footer { gap: 10px; padding: 12px; } .lightbox-caption p { font-size: 11px; }
+    }
+
+    .pilot-detail { margin-top: 32px; }
+    .pilot-workflow { padding-top: 24px; }
+    .pilot-photo { width: min(720px, 100%); margin: 28px auto 0; }
+    .pilot-photo img { width: 100%; border-radius: 4px; }
+    .pilot-photo figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .sop-demo { margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .sop-demo-head { display: flex; gap: 26px; justify-content: space-between; align-items: start; }
+    .sop-demo-head h3 { font-size: 24px; }
+    .sop-demo-head p:not(.index) { max-width: 720px; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .sop-progress-wrap { display: grid; gap: 8px; justify-items: end; flex-shrink: 0; }
+    .sop-progress { padding: 8px 13px; border-radius: 4px; color: var(--forest); background: #e4eee7; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .sop-reset { padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; color: var(--green); background: transparent; font-size: 12px; }
+    .sop-reset:hover { background: #e4eee7; }
+    .sop-cards { margin-top: 26px; }
+    .sop-cards .work-number { font-size: 28px; margin-bottom: 14px; }
+    .sop-cards h3 { font-size: 18px; }
+    .sop-check { display: flex; gap: 9px; align-items: start; margin-top: 13px; font-size: 12px; color: var(--ink); cursor: pointer; line-height: 1.7; }
+    .sop-check input { width: 16px; height: 16px; margin: 3px 0 0; accent-color: var(--green); flex-shrink: 0; cursor: pointer; }
+    .sop-check:has(input:checked) span { color: var(--green); }
+    @media (max-width: 760px) { .sop-demo-head { flex-direction: column; gap: 18px; } .sop-progress-wrap { grid-template-columns: auto auto; justify-items: start; align-items: center; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+  <link rel="stylesheet" href="../ai-news-dashboard/case-study-workspace.css">
+  <link rel="stylesheet" href="../project-workspace.css">
+  <link rel="stylesheet" href="../market-workspace.css">
+</head>
+<body>
+  <a class="skip-link" href="#journey">跳至项目内容</a>
+  <header class="topbar">
+    <a class="brand" href="../../index.html#projects" aria-label="返回作品集项目列表"><span class="brand-mark">SL</span><span>Shiyi Li · Retail &amp; Client Experience</span></a>
+    <nav class="topnav" aria-label="页面导航">
+      <a href="#overview">我的工作</a><a href="#journey">服务路径</a><a href="#collaboration">体验活动</a><a href="#followup">反馈跟进</a><a href="#evidence">过程材料</a><a href="#outcome">改进复盘</a><a class="privacy-link" href="#confidential">材料说明</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="project-title">
+      <div class="wrap hero-inner">
+        <p class="eyebrow">PROJECT 02 / CLIENT COMMUNICATION · EXPERIENCE EVENTS</p>
+        <h1 id="project-title">AI教育客户沟通<br>与体验活动</h1>
+        <p class="hero-copy">从高校客户的真实使用需求出发，将产品功能转为易理解的讲解与内容，通过宣讲、体验和现场答疑收集反馈，再交由团队跟进改进。</p>
+        <div class="hero-meta"><span>2024.10–2025.05</span><span>北京织知玄华智能科技有限公司</span><span>AI产品营销实习生</span></div>
+        <div class="hero-foot"><p>客户洞察 / 产品讲解 / 体验服务 / 反馈闭环</p><a href="#journey">查看服务路径 <span aria-hidden="true">↓</span></a></div>
+      </div>
+    </section>
+    <aside class="confidential" id="confidential" aria-labelledby="confidential-title">
+      <div class="wrap confidential-inner">
+        <strong class="confidential-label" id="confidential-title">材料与示例说明<small>EVIDENCE / METHOD EXAMPLES</small></strong>
+        <div class="confidential-copy"><strong>过程截图已脱敏；方法示例和可勾选清单均明确标注为演示。</strong><p>项目数字对应简历中的经历口径。合作记录仅支持合作执行部分，内部用户反馈、内容明细和功能数据不公开。</p></div>
+      </div>
+    </aside>
+
+    <div class="band">
+      <section class="wrap section" id="overview" aria-labelledby="overview-title">
+        <div class="section-head">
+          <div><p class="index">01 / 项目背景与职责</p><h2 id="overview-title">先了解客户<br>再讲清产品价值</h2></div>
+          <div class="section-intro"><p>在北京织知玄华智能科技有限公司担任AI产品营销实习生期间，服务高校教学、备课、自学等不同使用场景。客户是否理解功能、能否完成首次使用，以及体验后能否获得有效回复，是贯穿沟通与活动的重点。</p><p>我的工作覆盖用户社群、需求调研、公众号内容、高校宣讲与体验活动，并协助东南亚合作对接。线上说明、现场讲解和后续反馈围绕同一批客户需求衔接。</p></div>
+        </div>
+        <div class="work-grid" aria-label="项目背景、目标、行动与结果">
+          <article class="work-item"><span class="work-number">S</span><h3>客户场景有差异</h3><p>师生在教学、备课和自学中关注的功能不同，通用介绍难以回答具体的使用疑问。</p></article>
+          <article class="work-item"><span class="work-number">T</span><h3>让产品容易理解</h3><p>识别客户需求，将产品功能讲成具体使用价值，准备能够支持自助查阅与现场答疑的资料。</p></article>
+          <article class="work-item"><span class="work-number">A</span><h3>连接内容与体验</h3><p>管理社群、分类反馈，建设公众号内容，组织高校宣讲与体验；将待确认问题交由产品和业务团队跟进。</p></article>
+          <article class="work-item"><span class="work-number">R</span><h3>用反馈推动改进</h3><p>汇总100+条反馈、输出30+篇使用内容，期间核心功能使用率提升30%；提出10条优化建议，支持后续试点。</p></article>
+        </div>
+        <details class="evidence-drawer pilot-detail">
+          <summary><span>客户洞察如何影响讲解重点 <small>方法示例</small></span><span aria-hidden="true">＋</span></summary>
+          <p class="map-note">以下展示按场景整理需求的方法，属于作品集演示，不是客户原话或内部调研明细。</p>
+          <div class="work-grid pilot-workflow">
+            <article class="work-item"><h3>教学场景</h3><p>先确认课堂任务与教师关注点，再选择相关功能和教师案例，说明功能与任务之间的关系。</p></article>
+            <article class="work-item"><h3>备课场景</h3><p>先了解材料准备需求，再用示例讲解操作顺序，将关键步骤补充进指南或FAQ。</p></article>
+            <article class="work-item"><h3>自学场景</h3><p>先了解学习任务与使用障碍，再演示入口、输入和结果查看，帮助用户完成一次体验。</p></article>
+            <article class="work-item"><h3>共同检查点</h3><p>讲解后确认客户是否理解；遇到未确认问题，记录、转交对应团队并跟进回复。</p></article>
+          </div>
+        </details>
+      </section>
+    </div>
+
+    <div class="band soft">
+      <section class="wrap section" id="journey" aria-labelledby="journey-title">
+        <div class="section-head">
+          <div><p class="index">02 / 客户沟通闭环</p><h2 id="journey-title">从识别需求<br>到体验后的改进</h2></div>
+          <p class="section-intro">先听清客户的任务与障碍，再匹配产品讲解和使用内容；通过活动让客户实际体验，记录反馈、协调回复，并将重复问题纳入后续内容与产品建议。</p>
+        </div>
+        <ol class="timeline" aria-label="五阶段客户沟通与体验路径">
+          <li class="stage"><div class="stage-top"><strong>01</strong><span>NEEDS</span></div><h3>识别客户需求</h3><p>管理用户社群，调研教学、备课、自学场景，将100+条反馈分类，识别关注点与使用障碍。</p><div class="stage-output"><small>对应产出</small><strong>场景分类 / 需求与问题清单</strong></div><a href="#overview">查看需求整理思路 <span aria-hidden="true">↗</span></a></li>
+          <li class="stage"><div class="stage-top"><strong>02</strong><span>EXPLAIN</span></div><h3>讲清产品价值</h3><p>学习产品功能并准备场景讲解，从0到1建设公众号，输出30+篇使用指南、FAQ及案例，回应具体需求。</p><div class="stage-output"><small>对应产出</small><strong>使用指南 / FAQ / 场景案例</strong></div><a href="#product-examples">查看讲解结构示例 <span aria-hidden="true">↗</span></a></li>
+          <li class="stage"><div class="stage-top"><strong>03</strong><span>EXPERIENCE</span></div><h3>组织体验与答疑</h3><p>对接高校，安排宣讲与体验流程，协同准备演示和案例材料，负责现场组织及使用答疑。</p><div class="stage-output"><small>对应产出</small><strong>活动流程 / 演示资料 / 现场问题</strong></div><a href="#collaboration">查看活动执行 <span aria-hidden="true">↗</span></a></li>
+          <li class="stage"><div class="stage-top"><strong>04</strong><span>FOLLOW-UP</span></div><h3>跟进使用反馈</h3><p>区分已确认答案和待核查问题，将反馈转交产品或业务团队；更新回复与后续待办，支持客户继续使用。</p><div class="stage-output"><small>对应产出</small><strong>反馈分类 / 回复记录 / 跟进清单</strong></div><a href="#followup">查看跟进检查清单 <span aria-hidden="true">↗</span></a></li>
+          <li class="stage"><div class="stage-top"><strong>05</strong><span>IMPROVE</span></div><h3>改进内容与体验</h3><p>把重复疑问补充到内容，将体验问题整理为10条优化建议，为产品改进和后续高校试点提供参考。</p><div class="stage-output"><small>阶段结果</small><strong>内容补充 / 优化建议 / 后续试点支持</strong></div><a href="#outcome">查看结果与下一步 <span aria-hidden="true">↗</span></a></li>
+        </ol>
+        <div id="product-examples" class="sop-demo" aria-labelledby="product-examples-title">
+          <p class="index">PRODUCT COMMUNICATION / 讲解结构演示</p><h3 id="product-examples-title">让一个问题对应一份易理解的说明</h3>
+          <p class="map-note">以下为内容结构示例，不是已公开文章的复刻，也不展示内部产品操作或客户原话。</p>
+          <div class="records" aria-label="产品讲解与内容结构示例">
+            <article class="record"><h4>使用指南</h4><p>客户任务 → 相关功能 → 操作顺序 → 结果查看 → 注意事项。让首次使用的客户能够沿步骤完成体验。</p></article>
+            <article class="record"><h4>常见问题</h4><p>具体疑问 → 已确认答案 → 补充步骤 → 待核查问题的反馈入口。让重复问题有可持续查阅的说明。</p></article>
+            <article class="record"><h4>场景案例</h4><p>教学或学习目标 → 功能选择 → 使用过程 → 场景价值。帮助客户理解产品功能与自身任务的关系。</p></article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="band">
+      <section class="wrap section" id="collaboration" aria-labelledby="collaboration-title">
+        <div class="section-head">
+          <div><p class="index">03 / 活动执行与合作对接</p><h2 id="collaboration-title">准备好体验<br>接住现场问题</h2></div>
+          <p class="section-intro">高校活动将线上介绍变成实际体验。我对接高校、安排流程，并协同产品和业务团队准备演示、FAQ、教师案例及课程材料；现场组织与答疑之后，继续整理问题与跟进事项。</p>
+        </div>
+        <div class="collaboration-map" aria-label="高校客户需求与体验反馈连接产品、内容、活动和业务团队">
+          <article class="partner"><span class="map-label">CLIENTS &amp; PARTNERS</span><h3>高校与合作方</h3><p>教学、备课、自学需求<br>体验安排与后续沟通</p></article>
+          <article class="my-role"><span class="map-label">MY CONTRIBUTION / 我的工作</span><h3>准备体验<br>并跟进问题</h3><ul><li>了解需求与对接活动</li><li>准备演示及答疑资料</li><li>整理反馈与下一步</li></ul></article>
+          <div class="teams">
+            <article class="team"><span class="mono">01</span><div><h4>产品讲解准备</h4><p>协同产品团队确认功能与使用说明，准备演示和FAQ，遇到未确认问题记录后转交。</p></div></article>
+            <article class="team"><span class="mono">02</span><div><h4>客户活动执行</h4><p>对接高校、安排活动流程，协同准备教师案例及课程材料，负责现场组织和使用答疑。</p></div></article>
+            <article class="team"><span class="mono">03</span><div><h4>内容与反馈衔接</h4><p>将现场疑问与社群问题一起分类，补充指南、FAQ及场景内容，形成后续讲解依据。</p></div></article>
+            <article class="team"><span class="mono">04</span><div><h4>合作执行跟进</h4><p>参与东南亚合作，梳理需求和双方分工，跟进协议签署及交接，协调产品与业务材料。</p></div></article>
+          </div>
+        </div>
+        <p class="map-note">执行路径：明确客户关注点 → 对齐活动与材料 → 现场体验及答疑 → 整理反馈 → 协调回复和后续安排。</p>
+        <details class="evidence-drawer pilot-detail">
+          <summary><span>高校体验活动的工作检查点 <small>流程演示</small></span><span aria-hidden="true">＋</span></summary>
+          <div class="work-grid pilot-workflow">
+            <article class="work-item"><h3>会前对接</h3><p>确认活动安排、参与对象与客户关注点，列明材料需求及团队分工。</p></article>
+            <article class="work-item"><h3>演示准备</h3><p>按使用场景组织产品演示，核对FAQ、教师案例和课程材料。</p></article>
+            <article class="work-item"><h3>现场服务</h3><p>组织体验流程，回答已确认的使用问题，记录需要后续核查的反馈。</p></article>
+            <article class="work-item"><h3>会后跟进</h3><p>分类问题、同步对应团队，将补充说明纳入内容，将改进建议用于后续试点准备。</p></article>
+          </div>
+          <figure class="pilot-photo"><img src="../../works/covers/education-pilot.png" alt="高校交流与产品演示活动场景" loading="lazy"><figcaption>高校交流与产品演示场景 · 展示活动背景，具体工作职责见正文。</figcaption></figure>
+        </details>
+      </section>
+    </div>
+
+    <div class="band soft">
+      <section class="wrap section" id="followup" aria-labelledby="followup-title">
+        <div class="section-head">
+          <div><p class="index">04 / 反馈跟进与AI SOP</p><h2 id="followup-title">答疑之后<br>继续跟进客户体验</h2></div>
+          <p class="section-intro">现场回答解决当下疑问，反馈分类帮助发现重复问题。用AI辅助整理记录与清单初稿，再人工核对产品说明、负责人和回复内容，形成可复用的客户跟进流程。</p>
+        </div>
+        <div class="followup-table" role="table" aria-label="客户体验反馈与后续跟进">
+          <div class="followup-row header" role="row"><span role="columnheader">跟进事项</span><span role="columnheader">核对内容</span><span role="columnheader">我的工作</span></div>
+          <div class="followup-row" role="row"><h3 role="rowheader"><span class="mono">01</span>需求与使用障碍</h3><p role="cell"><span class="followup-label">核对内容</span><span>客户场景、关注功能、疑问类型及影响使用的障碍。</span></p><p role="cell"><span class="followup-label">我的工作</span><span>汇总社群与调研反馈，分类整理100+条问题，确定内容和讲解重点。</span></p></div>
+          <div class="followup-row" role="row"><h3 role="rowheader"><span class="mono">02</span>产品说明与材料</h3><p role="cell"><span class="followup-label">核对内容</span><span>使用步骤、已确认答案、场景案例与待补充说明。</span></p><p role="cell"><span class="followup-label">我的工作</span><span>整理指南、FAQ与场景内容，协同核对产品演示和活动资料。</span></p></div>
+          <div class="followup-row" role="row"><h3 role="rowheader"><span class="mono">03</span>体验反馈与回复</h3><p role="cell"><span class="followup-label">核对内容</span><span>现场疑问、待核查问题、对应团队及后续回复内容。</span></p><p role="cell"><span class="followup-label">我的工作</span><span>整理问题并交由对应团队确认，将回复同步到后续沟通和内容更新。</span></p></div>
+          <div class="followup-row" role="row"><h3 role="rowheader"><span class="mono">04</span>建议与后续试点</h3><p role="cell"><span class="followup-label">核对内容</span><span>重复问题、体验障碍、可补充内容与产品改进方向。</span></p><p role="cell"><span class="followup-label">我的工作</span><span>提出10条优化建议，补充使用说明，支持产品改进和后续高校试点。</span></p></div>
+        </div>
+        <div class="records" aria-label="客户服务可复用材料">
+          <article class="record"><h4>需求分类框架</h4><p>按使用场景、功能疑问与体验障碍整理，帮助选择讲解重点。</p></article>
+          <article class="record"><h4>答疑与反馈清单</h4><p>区分可直接解释的问题与待核查问题，记录回复与后续安排。</p></article>
+          <article class="record"><h4>活动准备模板</h4><p>确认流程、分工、演示、FAQ和案例材料，让会前准备与会后跟进衔接。</p></article>
+        </div>
+        <div class="sop-demo" aria-labelledby="sop-demo-title">
+          <div class="sop-demo-head"><div><p class="index">AI + SOP / 可操作的方法演示</p><h3 id="sop-demo-title">客户沟通与体验服务检查清单</h3><p>以下为作品集流程演示，可勾选查看进度，不记录真实客户信息。AI用于整理初稿，产品说明、客户回复和合作文件仍由人工及对应团队核对。</p></div><div class="sop-progress-wrap"><output class="sop-progress" aria-live="polite">0 / 8 已核对</output><button type="button" class="sop-reset">重新核对</button></div></div>
+          <div class="work-grid sop-cards">
+            <article class="work-item"><span class="work-number">01</span><h3>先确认需求</h3><p>产出：客户场景与疑问清单</p><label class="sop-check"><input type="checkbox"><span>客户任务与使用障碍已明确</span></label><label class="sop-check"><input type="checkbox"><span>需要重点讲解的功能已选择</span></label></article>
+            <article class="work-item"><span class="work-number">02</span><h3>再准备讲解</h3><p>产出：演示、FAQ与案例资料</p><label class="sop-check"><input type="checkbox"><span>演示顺序与产品说明已核对</span></label><label class="sop-check"><input type="checkbox"><span>活动流程与团队分工已确认</span></label></article>
+            <article class="work-item"><span class="work-number">03</span><h3>体验后跟进</h3><p>产出：现场答疑与反馈记录</p><label class="sop-check"><input type="checkbox"><span>已确认答案与待核查问题已区分</span></label><label class="sop-check"><input type="checkbox"><span>待核查问题已转交对应团队</span></label></article>
+            <article class="work-item"><span class="work-number">04</span><h3>反馈用于改进</h3><p>产出：内容补充与优化建议</p><label class="sop-check"><input type="checkbox"><span>重复疑问已列入指南或FAQ更新</span></label><label class="sop-check"><input type="checkbox"><span>体验问题已整理为改进及后续安排</span></label></article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="band">
+      <section class="wrap section" id="evidence" aria-labelledby="evidence-title">
+        <div class="section-head">
+          <div><p class="index">05 / COOPERATION EVIDENCE</p><h2 id="evidence-title">合作执行的<br>沟通与文件记录</h2></div>
+          <p class="section-intro">保留五份已脱敏材料，展示东南亚合作中信息同步、方案反馈与文件跟进。它们对应简历的合作对接部分；客户调研、30+篇内容和功能使用率的内部明细不在本页公开。</p>
+        </div>
+        <aside class="evidence-notice" aria-label="过程材料说明"><strong>支持合作执行部分</strong><p>说明仅对应图片可见内容，文件发送记录不代表个人完成全部合作，也不作为用户使用率的证明。</p></aside>
+        <div class="evidence-grid">
+          <figure class="evidence" id="evidence-01"><div class="evidence-heading"><span class="mono">RECORD 01</span><time datetime="2025-01-14">2025.01.14</time></div><a class="evidence-frame" href="./assets/evidence-latest-01.jpg" target="_blank" rel="noopener" aria-label="查看初步信息同步原图" title="查看原图"><img src="./assets/evidence-latest-01.jpg" alt="已脱敏的初步信息同步记录，2025年1月14日" loading="lazy" width="1710" height="844"></a><figcaption><strong>初步信息同步</strong><p>同步已有合作信息，整理需要进一步确认的问题。</p></figcaption></figure>
+          <figure class="evidence" id="evidence-02"><div class="evidence-heading"><span class="mono">RECORD 02</span><time datetime="2025-01-15">2025.01.15</time></div><a class="evidence-frame" href="./assets/evidence-latest-02.jpg" target="_blank" rel="noopener" aria-label="查看方案反馈与内部讨论原图" title="查看原图"><img src="./assets/evidence-latest-02.jpg" alt="已脱敏的方案反馈与内部讨论记录，2025年1月15日" loading="lazy" width="1569" height="765"></a><figcaption><strong>方案反馈与内部讨论</strong><p>围绕合作方案同步意见，跟进内部反馈。</p></figcaption></figure>
+          <figure class="evidence" id="evidence-03"><div class="evidence-heading"><span class="mono">RECORD 03</span><time datetime="2025-02-05">2025.02.05</time></div><a class="evidence-frame" href="./assets/evidence-latest-03.jpg" target="_blank" rel="noopener" aria-label="查看合作事项沟通原图" title="查看原图"><img src="./assets/evidence-latest-03.jpg" alt="已脱敏的合作事项沟通记录，2025年2月5日" loading="lazy" width="1692" height="1336"></a><figcaption><strong>合作事项沟通</strong><p>整理商讨结果，汇总市场与后续合作相关意见。</p></figcaption></figure>
+          <figure class="evidence" id="evidence-04"><div class="evidence-heading"><span class="mono">RECORD 04</span><time datetime="2025-02-20">2025.02.20</time></div><a class="evidence-frame" href="./assets/evidence-latest-04.jpg" target="_blank" rel="noopener" aria-label="查看文件核对与流程跟进原图" title="查看原图"><img src="./assets/evidence-latest-04.jpg" alt="已脱敏的文件发送与信息同步记录，2025年2月20日" loading="lazy" width="1688" height="942"></a><figcaption><strong>文件核对与流程跟进</strong><p>发送合作文件，同步待整理的信息与相关问题。</p></figcaption></figure>
+          <figure class="evidence" id="evidence-05"><div class="evidence-heading"><span class="mono">RECORD 05</span><time datetime="2025-02-28">2025.02.28</time></div><a class="evidence-frame" href="./assets/evidence-latest-05.jpg" target="_blank" rel="noopener" aria-label="查看文件整理与信息同步原图" title="查看原图"><img src="./assets/evidence-latest-05.jpg" alt="已脱敏的文件整理、发送与存档记录，2025年2月28日" loading="lazy" width="1706" height="1238"></a><figcaption><strong>文件整理与信息同步</strong><p>整理并发送相关文件，配合查阅与存档。</p></figcaption></figure>
+        </div>
+      </section>
+    </div>
+
+    <div class="band outcomes-band">
+      <section class="wrap section" id="outcome" aria-labelledby="outcome-title">
+        <div class="section-head"><div><p class="index">06 / 工作结果与复盘</p><h2 id="outcome-title">让需求、体验<br>和改进形成闭环</h2></div><p class="section-intro">100+条反馈帮助识别讲解重点，30+篇内容支持理解与使用，宣讲和体验补充现场反馈；将问题整理为10条优化建议，再用于内容完善、产品改进及后续高校试点。</p></div>
+        <div class="outcome-grid">
+          <article class="outcome"><span>01 / INSIGHT &amp; CONTENT</span><h3>100+条反馈 / 30+篇内容</h3><p>管理社群并分类反馈，从0到1建设公众号；使用指南、FAQ与场景案例围绕客户需求组织。</p></article>
+          <article class="outcome"><span>02 / USAGE</span><h3>核心功能使用率提升30%</h3><p>对应简历中的实习期间变化，保留原稿“提升30%”口径；为同期项目结果，未将全部变化归因于个人内容工作。</p></article>
+          <article class="outcome"><span>03 / NEXT EXPERIENCE</span><h3>提出10条优化建议</h3><p>结合客户行为与体验反馈整理建议，支持产品改进和后续高校试点；建议数量不代表全部已实施。</p></article>
+        </div>
+        <details class="evidence-drawer pilot-detail">
+          <summary><span>合作执行的补充材料：签约现场</span><span aria-hidden="true">＋</span></summary>
+          <figure class="signing-evidence">
+            <a class="evidence-frame" href="./assets/06-signing.jpg" target="_blank" rel="noopener" aria-label="查看合作签约仪式现场原图" title="查看原图"><img src="./assets/06-signing.jpg" alt="已脱敏的合作签约仪式现场合影" loading="lazy" width="1188" height="573"></a>
+            <figcaption><strong>合作签约仪式现场</strong><p>展示合作项目的团队阶段结果。我的参与范围是需求及分工整理、材料协同、签署跟进和项目交接。</p></figcaption>
+          </figure>
+        </details>
+        <div class="contribution"><strong>经验沉淀</strong><p>客户沟通需要先识别需求，再选择讲解内容；体验服务需要接住疑问，并让反馈有回复和下一步。AI辅助整理内容与清单，支持同一套流程用于后续沟通和活动准备。</p></div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="wrap"><span>Shiyi Li · Retail &amp; Client Experience Portfolio</span><a href="../../index.html#projects">返回项目列表 ↑</a></div></footer>
+
+  <dialog class="lightbox" aria-labelledby="lightbox-title" aria-describedby="lightbox-disclosure">
+    <header class="lightbox-head"><h2 id="lightbox-title">项目材料</h2><button class="icon-button" id="lightbox-close" type="button" aria-label="关闭大图" title="关闭大图" autofocus>×</button></header>
+    <p class="lightbox-disclosure" id="lightbox-disclosure">已脱敏材料 · 未公开信息因保密要求不作展示</p>
+    <div class="lightbox-visual"><img alt="" hidden></div>
+    <footer class="lightbox-footer"><button class="icon-button" id="lightbox-prev" type="button" aria-label="上一张材料" title="上一张材料">←</button><div class="lightbox-caption" aria-live="polite"><p id="lightbox-caption"></p><a id="lightbox-original" target="_blank" rel="noopener">打开原图 ↗</a></div><button class="icon-button" id="lightbox-next" type="button" aria-label="下一张材料" title="下一张材料">→</button></footer>
+  </dialog>
+  <script>
+    const lightbox = document.querySelector('.lightbox');
+    const links = [...document.querySelectorAll('.evidence-frame')];
+    const preview = lightbox.querySelector('img');
+    const previous = document.querySelector('#lightbox-prev');
+    const next = document.querySelector('#lightbox-next');
+    let activeIndex = 0;
+    let opener = null;
+    let previousOverflow = '';
+
+    function showImage(index) {
+      activeIndex = index;
+      const link = links[index];
+      const figure = link.closest('figure');
+      preview.src = link.href;
+      preview.alt = link.querySelector('img').alt;
+      preview.hidden = false;
+      document.querySelector('#lightbox-title').textContent = figure.querySelector('figcaption strong').textContent;
+      const detail = figure.querySelector('time')?.textContent || figure.querySelector('figcaption p').textContent;
+      document.querySelector('#lightbox-caption').textContent = `${String(index + 1).padStart(2, '0')} / ${String(links.length).padStart(2, '0')} · ${detail}`;
+      document.querySelector('#lightbox-original').href = link.href;
+      previous.disabled = index === 0;
+      next.disabled = index === links.length - 1;
+    }
+
+    // Image links remain usable when dialog support or JavaScript is unavailable.
+    if (typeof lightbox.showModal === 'function') {
+      links.forEach((link, index) => link.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        opener = link;
+        previousOverflow = document.body.style.overflow;
+        showImage(index);
+        lightbox.showModal();
+        document.body.style.overflow = 'hidden';
+      }));
+    }
+    document.querySelector('#lightbox-close').addEventListener('click', () => lightbox.close());
+    previous.addEventListener('click', () => { if (activeIndex > 0) showImage(activeIndex - 1); });
+    next.addEventListener('click', () => { if (activeIndex < links.length - 1) showImage(activeIndex + 1); });
+    lightbox.addEventListener('keydown', (event) => {
+      if (event.key === 'Tab') {
+        const controls = [...lightbox.querySelectorAll('button:not(:disabled), a[href]')];
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+      if (event.key === 'ArrowLeft' && activeIndex > 0) { event.preventDefault(); showImage(activeIndex - 1); }
+      if (event.key === 'ArrowRight' && activeIndex < links.length - 1) { event.preventDefault(); showImage(activeIndex + 1); }
+    });
+    lightbox.addEventListener('click', (event) => {
+      const box = lightbox.getBoundingClientRect();
+      if (event.target === lightbox && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) lightbox.close();
+    });
+    lightbox.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      preview.hidden = true;
+      preview.removeAttribute('src');
+      if (opener) opener.focus({ preventScroll: true });
+    });
+    if ('IntersectionObserver' in window) {
+      const navLinks = [...document.querySelectorAll('.topnav a')];
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (!visible) return;
+        navLinks.forEach(link => {
+          if (link.hash === '#' + visible.target.id) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      }, { rootMargin: '-110px 0px -55% 0px' });
+      navLinks.forEach(link => { const target = document.querySelector(link.hash); if (target) observer.observe(target); });
+    }
+  </script>
+
+  <script>
+    const sopChecks = [...document.querySelectorAll('.sop-check input')];
+    const sopProgress = document.querySelector('.sop-progress');
+    const updateSopProgress = () => {
+      const checked = sopChecks.filter(input => input.checked).length;
+      sopProgress.textContent = `${checked} / ${sopChecks.length} 已核对`;
+    };
+    sopChecks.forEach(input => input.addEventListener('change', updateSopProgress));
+    document.querySelector('.sop-reset').addEventListener('click', () => {
+      sopChecks.forEach(input => { input.checked = false; });
+      updateSopProgress();
+    });
+  </script>
+  <script src="../ai-news-dashboard/lucide.min.js"></script>
+  <script src="../project-workspace.js" data-project="partnership"></script>
+</body>
+</html>
